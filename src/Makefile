@@ -6,7 +6,6 @@ CXXFLAGS += -Weffc++
 CXXFLAGS += -std=c++17
 
 ASFLAGS64  = --64
-ASFLAGS64 += -march=corei7
 
 CPPASM_INC = ../../cppasm/src
 CPPASM_OBJ = ../../cppasm/src/obj/*.o
