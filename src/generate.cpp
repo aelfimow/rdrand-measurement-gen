@@ -4,10 +4,8 @@
 
 #include "cppasm.h"
 
-static void gen_WindowsFunc()
+static void gen_WindowsFunc(std::string const &func_name)
 {
-    // Function name to be generated
-    const std::string func_name { "rdrand_func" };
     comment("void " + func_name + "(size_t *pOut)");
     comment("pOut is in %rcx");
 
@@ -22,10 +20,8 @@ static void gen_WindowsFunc()
     RET();
 }
 
-static void gen_LinuxFunc()
+static void gen_LinuxFunc(std::string const &func_name)
 {
-    // Function name to be generated
-    const std::string func_name { "rdrand_func" };
     comment("void " + func_name + "(size_t *pOut)");
     comment("pOut is in %rdi");
 
@@ -62,12 +58,12 @@ try
 
     if (forWindows)
     {
-        gen_WindowsFunc();
+        gen_WindowsFunc("rdrand_func");
     }
 
     if (forLinux)
     {
-        gen_LinuxFunc();
+        gen_LinuxFunc("rdrand_func");
     }
 
     return EXIT_SUCCESS;
