@@ -5,7 +5,7 @@
 
 #include "cppasm.h"
 
-static void gen_function(std::string const &func_name, r64 &param)
+static void gen_function(std::string const &func_name, r64 &param, size_t max_count)
 {
     comment("void " + func_name + "(size_t *pOut)");
 
@@ -20,8 +20,7 @@ static void gen_function(std::string const &func_name, r64 &param)
 
     m64 buf_addr { param };
 
-    size_t count = 0;
-
+    for (size_t count = 0; count < max_count; ++count)
     {
         std::stringstream ss;
         ss << "rn" << count;
@@ -57,12 +56,12 @@ try
 
     if (forWindows)
     {
-        gen_function("rdrand_func", RCX);
+        gen_function("rdrand_func", RCX, 1);
     }
 
     if (forLinux)
     {
-        gen_function("rdrand_func", RDI);
+        gen_function("rdrand_func", RDI, 1);
     }
 
     return EXIT_SUCCESS;
