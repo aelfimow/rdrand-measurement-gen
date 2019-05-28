@@ -1,29 +1,15 @@
 #include <iostream>
 #include <cstdlib>
 #include <stdexcept>
+#include <sstream>
 
 #include "cppasm.h"
 
-static void gen_WindowsFunc(std::string const &func_name)
+static void gen_function(std::string const &func_name, r64 &param)
 {
     comment("void " + func_name + "(size_t *pOut)");
-    comment("pOut is in %rcx");
 
-    global(func_name);
-
-    section code { ".text" };
-    code.start();
-
-    label(func_name);
-
-    RDRAND(RAX);
-    RET();
-}
-
-static void gen_LinuxFunc(std::string const &func_name)
-{
-    comment("void " + func_name + "(size_t *pOut)");
-    comment("pOut is in %rdi");
+    comment("pOut is in " + param.name());
 
     global(func_name);
 
@@ -58,12 +44,12 @@ try
 
     if (forWindows)
     {
-        gen_WindowsFunc("rdrand_func");
+        gen_function("rdrand_func", RCX);
     }
 
     if (forLinux)
     {
-        gen_LinuxFunc("rdrand_func");
+        gen_function("rdrand_func", RDI);
     }
 
     return EXIT_SUCCESS;
