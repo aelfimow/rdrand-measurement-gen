@@ -4,4 +4,5 @@
 .section .text
 rdrand_func:
 	rdrand %rax
+	mov %rax, (%rdi)
 	ret

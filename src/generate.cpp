@@ -18,7 +18,10 @@ static void gen_function(std::string const &func_name, r64 &param)
 
     label(func_name);
 
+    m64 buf_addr { param };
+
     RDRAND(RAX);
+    MOV(buf_addr, RAX);
     RET();
 }
 
