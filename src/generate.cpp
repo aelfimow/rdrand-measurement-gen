@@ -20,8 +20,18 @@ static void gen_function(std::string const &func_name, r64 &param)
 
     m64 buf_addr { param };
 
-    RDRAND(RAX);
-    MOV(buf_addr, RAX);
+    size_t count = 0;
+
+    {
+        std::stringstream ss;
+        ss << "rn" << count;
+        std::string rnx { ss.str() };
+        label(rnx);
+        RDRAND(RAX);
+        JNC(rnx);
+        MOV(buf_addr, RAX);
+    }
+
     RET();
 }
 
