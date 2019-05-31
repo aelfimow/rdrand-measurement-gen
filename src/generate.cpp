@@ -78,12 +78,12 @@ try
 
     if (forWindows)
     {
-        gen_function("rdrand_func", RCX, 1);
+        gen_function("rdrand_func1", RCX, 1);
     }
 
     if (forLinux)
     {
-        gen_function("rdrand_func", RDI, 1);
+        gen_function("rdrand_func1", RDI, 1);
     }
 
     return EXIT_SUCCESS;

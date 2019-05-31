@@ -1,8 +1,8 @@
-# void rdrand_func(size_t *pOut)
+# void rdrand_func1(size_t *pOut)
 # pOut is in %rdi
-.global rdrand_func
+.global rdrand_func1
 .section .text
-rdrand_func:
+rdrand_func1:
 rn0:
 	rdrand %rax
 	jnc rn0
