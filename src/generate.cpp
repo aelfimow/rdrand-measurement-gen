@@ -20,15 +20,37 @@ static void gen_function(std::string const &func_name, r64 &param, size_t max_co
 
     m64 buf_addr { param };
 
+    r64 &offset_reg { R8 };
+
+    bool const is_buffer_large = (max_count > 1);
+
+    if (is_buffer_large)
+    {
+        imm64 offset_value { 8 };
+        MOV(offset_reg, offset_value);
+    }
+
     for (size_t count = 0; count < max_count; ++count)
     {
         std::stringstream ss;
         ss << "rn" << count;
         std::string rnx { ss.str() };
+
         label(rnx);
+
         RDRAND(RAX);
         JNC(rnx);
         MOV(buf_addr, RAX);
+
+        if (is_buffer_large)
+        {
+            bool const is_last_count = (count == (max_count - 1));
+
+            if (!is_last_count)
+            {
+                ADD(param, offset_reg);
+            }
+        }
     }
 
     RET();
